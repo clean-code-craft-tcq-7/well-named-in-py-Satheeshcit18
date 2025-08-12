@@ -17,13 +17,28 @@ def get_color_from_pair_number(pair_number):
     raise Exception('Minor index out of range')
   return MAJOR_COLORS[major_index], MINOR_COLORS[minor_index]
 
+def color_pair_to_string(major_color, minor_color):
+  return f'{major_color} {minor_color}'
+
+
+def get_pair_number_from_color(major_color, minor_color):
+  try:
+    major_index = MAJOR_COLORS.index(major_color)
+  except ValueError:
+    raise Exception('Major index out of range')
+  try:
+    minor_index = MINOR_COLORS.index(minor_color)
+  except ValueError:
+    raise Exception('Minor index out of range')
+  return major_index * len(MINOR_COLORS) + minor_index + 1
+
+def test_pair_to_number(major_color, minor_color, expected_pair_number):
+  pair_number = get_pair_number_from_color(major_color, minor_color)
+  assert(pair_number == expected_pair_number)
+
 def test_number_to_pair(pair_number,
                         expected_major_color, expected_minor_color):
   major_color, minor_color = get_color_from_pair_number(pair_number)
   assert(major_color == expected_major_color)
   assert(minor_color == expected_minor_color)
 
-if __name__ == '__main__':
-  test_number_to_pair(4, 'White', 'Brown')
-  test_number_to_pair(5, 'White', 'Slate')
-  print('Done :)')
